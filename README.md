@@ -5,6 +5,6 @@ Welcome to Giftr™! Please build out the following features **without persisten
 - In `src/giftData.js` is all the gift data. Build out the following features:
 
   <!-- - A user should be able to see all of the gift data on initial page load -->
-  - A user should be able to search for and filter particular gifts with names that _include_ a particular search query.
+  <!-- - A user should be able to search for and filter particular gifts with names that _include_ a particular search query. -->
   - A user should be able to delete a particular gift
   - A user (any user, don't worry about authorization) should be able to edit a gift's details

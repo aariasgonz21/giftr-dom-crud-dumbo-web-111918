@@ -1,13 +1,11 @@
 // You can add your event handlers here!
 document.addEventListener('DOMContentLoaded', function() {
- giftList = document.getElementsByClassName('gift-list')[0];
+  let giftList = document.getElementsByClassName('gift-list')[0];
 
-// ************ Loads Gift Data *****************
+  // ************ Renders Gift *****************
 
-  function loadGiftData() {
-    let defaultListItem = document.getElementById('default-list-item');
-
-    for(var i = 0; i < gifts.length; i++){
+  function renderGifts(gifts) {
+    for (var i = 0; i < gifts.length; i++) {
       let newListItem = document.createElement('li');
       newListItem.className = 'new-list-item'
       newListItem.innerHTML = gifts[i].name;
@@ -15,33 +13,48 @@ document.addEventListener('DOMContentLoaded', function() {
       const liImage = document.createElement('img');
       liImage.src = gifts[i].image;
 
+      let deleteButton = document.createElement("BUTTON");
+      deleteButton.setAttribute('id', 'delete')
+      deleteButton.setAttribute('class', "ui button");
+      deleteButton.innerHTML = "Delete";
+      //deleteButton.dataset.id = gifts[i].id
+
+      newListItem.appendChild(liImage);
+      newListItem.appendChild(deleteButton);
       giftList.appendChild(newListItem);
-      giftList.appendChild(liImage);
     }
-    giftList.childNodes.length > 1 ? defaultListItem.style.display = "none" : ""
   }
+// ************ Loads Gift Data *****************
+
+    let defaultListItem = document.getElementById('default-list-item');
+    if(gifts.length > 0){
+        renderGifts(gifts);
+    }
+
+    giftList.childNodes.length > 1 ? defaultListItem.style.display = "none" : "block"
+
   // ************ Searches/Filters Items *****************
 
-  function itemSearch() {
     let searchBar = document.getElementById("filter-input");
-    let input = searchBar.value.toUpperCase();
 
     searchBar.addEventListener("input", function() {
+      let input = searchBar.value.toUpperCase();
       while (giftList.firstChild) {
         giftList.removeChild(giftList.firstChild);
       }
 
-      for (var i = 0; i < gifts.length; i++) {
-        if (gifts[i].name.toUpperCase().indexOf(input) > -1) {
-          
-        }
-      }
-    })
-  }
+      let filteredArray = gifts.filter(gift => {
+        return gift.name.toUpperCase().includes(input)
+      })
+      renderGifts(filteredArray);
+  })
 
-  // ************ Running All Functions *****************
+  //****************** Delete a Gift ***********************
+  let deleteBtn = document.getElementById("delete");
 
-  loadGiftData();
-  itemSearch();
-
+  giftList.addEventListener("click", function() {
+    if(event.target.innerHTML === "Delete"){
+      event.target.parentNode.remove();
+    }
+  })
 })
